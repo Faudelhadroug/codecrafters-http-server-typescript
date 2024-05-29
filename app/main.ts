@@ -1,13 +1,10 @@
 import * as net from 'net';
+import { Buffer } from 'buffer';
 
-const server = net.createServer((socket) => {
+const server = net.createServer((socket: Buffer) => {
     socket.end();
 });
-
-// You can use print statements as follows for debugging, they'll be visible when running tests.
-console.log("Logs from your program will appear here!");
-
-// Uncomment this to pass the first stage
-// server.listen(4221, 'localhost', () => {
-//     console.log('Server is running on port 4221');
-// });
+const PORT = 4221
+server.listen(PORT, 'localhost', () => {
+    console.log(`Server is running on port ${PORT}`);
+});
