@@ -11,8 +11,8 @@ const server = net.createServer((socket: Buffer) => {
         const path = request.split(" ")[1]
         const echoRequest = path.split("/echo/")[1]
         if(echoRequest){
-            const ContentLength_REPONSE = `Content-Length: ${echoRequest.length}\r\n`
-            const response = `${OK_200_RESPONSE}\r\n${ContentType_TextPlain_RESPONSE}${ContentLength_REPONSE}\r\n${echoRequest}`
+            const ContentLength_REPONSE = `Content-Length: ${echoRequest.length}`
+            const response = `${OK_200_RESPONSE}\r\n${ContentType_TextPlain_RESPONSE}${ContentLength_REPONSE}\r\n\r\n${echoRequest}`
             socket.write(response)
             socket.end()
             return;
@@ -22,6 +22,12 @@ const server = net.createServer((socket: Buffer) => {
             socket.write(`${OK_200_RESPONSE}\r\n\r\n`)
             socket.end()
             return;
+        }
+        if(path === '/user-agent'){
+            const userAgentRequest = request.split("User-Agent: ")[1]
+            const ContentLength_REPONSE = `Content-Length: ${userAgentRequest.trim().length}`
+            const response = `${OK_200_RESPONSE}\r\n${ContentType_TextPlain_RESPONSE}${ContentLength_REPONSE}\r\n\r\n${userAgentRequest}`
+            socket.write(response)
         }
         socket.write(`${NotFound_400_RESPONSE}\r\n\r\n`)
         socket.end()
