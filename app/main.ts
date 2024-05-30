@@ -28,6 +28,8 @@ const server = net.createServer((socket: Buffer) => {
             const ContentLength_REPONSE = `Content-Length: ${userAgentRequest.trim().length}`
             const response = `${OK_200_RESPONSE}\r\n${ContentType_TextPlain_RESPONSE}${ContentLength_REPONSE}\r\n\r\n${userAgentRequest}`
             socket.write(response)
+            socket.end();
+            return
         }
         socket.write(`${NotFound_400_RESPONSE}\r\n\r\n`)
         socket.end()
